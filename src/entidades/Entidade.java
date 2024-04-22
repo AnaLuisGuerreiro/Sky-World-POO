@@ -25,4 +25,12 @@ public abstract class Entidade {
     }
 
     public abstract void atacar(NPC inimigo); // Metodo abstrato para atacar um NPC
+
+    public int getHp() {
+        return hp;
+    }
+
+    public int getForca() {
+        return forca;
+    }
 }
