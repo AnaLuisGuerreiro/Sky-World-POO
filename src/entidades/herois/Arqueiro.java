@@ -1,23 +1,30 @@
 package entidades.herois;
 
+import entidades.Entidade;
 import entidades.Heroi;
-import entidades.NPC;
-import itens.ArmaPrincipal;
-import itens.consumo.Consumivel;
-
-import java.util.ArrayList;
 
 public class Arqueiro extends Heroi {
 
+
     /*
-    Construtor de Arqueiro
-     */
-    public Arqueiro(String nome, int maxHp, int hp, int forca, int nivel, int ouro, ArmaPrincipal armaPrincipal, ArrayList<Consumivel> inventario) {
-        super(nome, maxHp, hp, forca, nivel, ouro, armaPrincipal, inventario);
+        Construtor de Arqueiro
+    */
+    public Arqueiro(String nome, int forca, int maxHp) {
+        super(nome, forca,maxHp);
     }
 
     @Override
-    public void atacar(NPC inimigo) {
+    public Entidade atacar(Entidade inimigo) {
+        return null;
+    }
+
+    @Override
+    public void usarPocao() {
+
+    }
+
+    @Override
+    public void mostrarDetalhes() {
 
     }
 }

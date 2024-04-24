@@ -1,5 +1,6 @@
 package entidades;
 
+import efeitos.Efeitos;
 import itens.ArmaPrincipal;
 import itens.ItemHeroi;
 import itens.consumo.Consumivel;
@@ -10,11 +11,9 @@ import java.util.Random;
 
 public class Vendedor {
     private ArrayList<ItemHeroi> loja;
-    private Random random;
 
-    public Vendedor(ArrayList<ItemHeroi> loja) {
+    public Vendedor() {
         this.loja = new ArrayList<>();
-        this.random = new Random();
     }
 
     /**
@@ -23,31 +22,71 @@ public class Vendedor {
     public void imprimirLoja() {
         System.out.println("=== Mercado Celestial ===");
 
-        int totalItens = loja.size();
-        int itensParaMostrar = Math.min(10, totalItens);
+        int numItens = loja.size(); // Quantidade de itens disponiveis
 
-        for (int i = 0; i < itensParaMostrar; i++) {
-            int indexAleatorio = random.nextInt(totalItens);
-            ItemHeroi item = loja.get(indexAleatorio);
+        // Verificar se loja tem itens
+        if (numItens == 0) {
+            System.out.println("Ups...sem stock de itens. Tenta numa proxima!");
+            return;
+        }
+
+        // Mostrar máximo 10 itens senão mostra número de itens da loja
+        int numItensMostrar = Math.min(10, numItens);
+
+        Collections.shuffle(loja); // Baralhar a lista de itens
+
+        // Ciclo para mostrar os itens
+        for (int i = 0; i < numItensMostrar; i++) {
+            ItemHeroi item = loja.get(i);
+            System.out.print(i+1 + " ");
             item.mostrarDetalhes();
         }
     }
 
 
-    public void vender(Heroi heroi, ItemHeroi item){
-        if (loja.contains(item) && heroi.ouro >= item.getPreco()) {
-            loja.remove(item);
-            heroi.ouro -= item.getPreco();
-            if (item instanceof ArmaPrincipal) {
-                heroi.setArmaPrincipal((ArmaPrincipal) item);
-            } else {
-                heroi.inventario.add((Consumivel) item);
-            }
-            System.out.println("Aqui tens o teu item, dá-lhe bom uso!");
-        } else {
-            System.out.println("Bem... aconcelho-te a arranjar ouro antes que esgote.");
+    public void vender(Heroi heroi, int item) {
+        ItemHeroi itemSelecionado = loja.get(item - 1); // Indice real do item
+
+        // Erro de seleção
+        if(item < 1 || item > loja.size()){
+            System.out.println("Esse item não existe guerreiro...");
+            return;
         }
 
+        // Heroi sem dinheiro
+        if(heroi.ouro < itemSelecionado.getPreco()){
+            System.out.println("Hahaha... não fazemos caridade " + heroi.getClass().getName());
+            return;
+        }
+
+        // Verificar uso permitido por tipo de classe(heroi)
+        if(!itemSelecionado.getHeroisPermitidos().contains(heroi.getClass().getName())){
+            System.out.println("Esse item não é para ti.");
+            return;
+        }
+
+        // Compra com sucesso
+        if(itemSelecionado instanceof ArmaPrincipal){
+            heroi.setArmaPrincipal((ArmaPrincipal) itemSelecionado); // Tornar arma a ArmaPrincipal do heroi
+            System.out.println("Parabéns " + Efeitos.BOLD + itemSelecionado.getNome());
+        } else{
+            heroi.getInventario().add((Consumivel) itemSelecionado); // Adicionar item ao inventário
+            System.out.println("Parabéns, compraste o consumivel " + Efeitos.BOLD + itemSelecionado.getNome());
+        }
+
+        // Retirar valor do item ao ouro do heroi
+        heroi.setOuro(heroi.ouro - itemSelecionado.getPreco());
+
+        // Remover item da loja
+        loja.remove(itemSelecionado);
+    }
+
+    public void addItem(ItemHeroi itemNovo){
+        loja.add(itemNovo);
+    }
+
+    public ArrayList<ItemHeroi> getLoja() {
+        return loja;
     }
 }
 

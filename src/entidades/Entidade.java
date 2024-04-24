@@ -2,35 +2,27 @@ package entidades;
 
 public abstract class Entidade {
     protected String nome;
-    protected int maxHp;
+    protected int hpMax;
     protected int hp;
     protected int forca;
 
-    // Construtor da entidade
-    public Entidade(String nome, int maxHp, int hp, int forca) {
+    /*
+       Construtor de Entidade
+     */
+    public Entidade(String nome, int hpMax, int forca) {
         this.nome = nome;
-        this.maxHp = 100; // Max vida inicial (100)
-        this.hp = maxHp;  // Hp inicial (100)
+        this.hpMax = hpMax;
+        this.hp = hpMax;
         this.forca = forca;
     }
 
-    /**
-     * Exibir detalhes da entidade
-     */
     public void mostrarDetalhes(){
-        System.out.println("--------------------------------------------");
-        System.out.println("Nick: " + nome + " | " + "Força: " + forca + " | HP: " + hp + "/" + maxHp);
-        System.out.println("--------------------------------------------");
-
+        System.out.println("| Nick: " + nome + " | Força " + forca + " | Hp: " + hp + "/" + hpMax);
     }
 
-    public abstract void atacar(NPC inimigo); // Metodo abstrato para atacar um NPC
-
-    public int getHp() {
-        return hp;
+    // Getters e setters para os atributos
+    public String getNome() {
+        return nome;
     }
 
-    public int getForca() {
-        return forca;
-    }
 }

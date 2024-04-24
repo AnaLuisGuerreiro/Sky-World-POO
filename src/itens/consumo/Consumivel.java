@@ -1,5 +1,6 @@
 package itens.consumo;
 
+import efeitos.Efeitos;
 import itens.ItemHeroi;
 
 import java.util.ArrayList;
@@ -12,7 +13,6 @@ public abstract class Consumivel extends ItemHeroi {
 
     @Override
     public void mostrarDetalhes() {
-        System.out.println("| " + nome + "  |  " + preco + "🥮 |");
-        System.out.println("-------------------------------------");
+        System.out.print("| " + nome + "  |  " + preco + "🥮 |");
     }
 }

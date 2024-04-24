@@ -1,5 +1,6 @@
 package entidades.herois;
 
+import entidades.Entidade;
 import entidades.Heroi;
 import entidades.NPC;
 import itens.ArmaPrincipal;
@@ -9,13 +10,25 @@ import java.util.ArrayList;
 
 public class Feiticeiro extends Heroi {
 
-    public Feiticeiro(String nome, int maxHp, int hp, int forca, int nivel, int ouro, ArmaPrincipal armaPrincipal, ArrayList<Consumivel> inventario) {
-        super(nome, maxHp, hp, forca, nivel, ouro, armaPrincipal, inventario);
+    /*
+        Construtor Feiticeiro
+    */
+    public Feiticeiro(String nome, int forca, int maxHp) {
+        super(nome, forca, maxHp);
     }
 
     @Override
-    public void atacar(NPC inimigo) {
+    public Entidade atacar(Entidade inimigo) {
+        return null;
+    }
+
+    @Override
+    public void usarPocao() {
 
     }
 
+    @Override
+    public void mostrarDetalhes() {
+
+    }
 }

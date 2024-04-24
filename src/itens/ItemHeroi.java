@@ -7,14 +7,20 @@ public abstract class ItemHeroi {
     protected int preco;
     protected ArrayList<String> heroisPermitidos;
 
-    public ItemHeroi(String nome, int preco) {
+    public ItemHeroi(String nome, int preco, ArrayList<String> heroisPermitidos) {
         this.nome = nome;
         this.preco = preco;
-        this.heroisPermitidos = new ArrayList<String>();
+        this.heroisPermitidos = heroisPermitidos;
     }
 
-    public void mostrarDetalhes() {
-        System.out.println("|  " + nome + "  |  " + preco + "  |  " + heroisPermitidos + "  |");
+
+    public abstract void mostrarDetalhes();
+
+
+
+    // Getters do item
+    public String getNome() {
+        return nome;
     }
 
     public int getPreco() {
@@ -24,4 +30,5 @@ public abstract class ItemHeroi {
     public ArrayList<String> getHeroisPermitidos() {
         return heroisPermitidos;
     }
+
 }

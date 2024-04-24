@@ -12,17 +12,33 @@ public abstract class Heroi extends Entidade {
     protected ArrayList<Consumivel> inventario;
 
 
-    public Heroi(String nome, int maxHp, int hp, int forca, int nivel, int ouro, ArmaPrincipal armaPrincipal, ArrayList<Consumivel> inventario) {
-        super(nome, maxHp, hp, forca);
-        this.nivel = 1; // Nivel inicial
-        this.ouro = ouro;
-        this.armaPrincipal = armaPrincipal;
+    public Heroi(String nome, int forca, int maxHp) {
+        super(nome, forca, maxHp);
+        this.nivel = 1;
+        this.ouro = 0;
         this.inventario = new ArrayList<>();
     }
 
-    public abstract void atacar(NPC inimigo);
+    public abstract Entidade atacar(Entidade npc);
+
+    public void mostrarInventario() {
+    }
+
+    public void usarPocao() {
+    }
+
+    // Getters e setters para os atributos
+
+    public int setOuro(int i) {
+        return ouro;
+    }
+
 
     public void setArmaPrincipal(ArmaPrincipal armaPrincipal) {
         this.armaPrincipal = armaPrincipal;
+    }
+
+    public ArrayList<Consumivel> getInventario() {
+        return inventario;
     }
 }

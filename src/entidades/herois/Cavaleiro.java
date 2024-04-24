@@ -1,27 +1,30 @@
 package entidades.herois;
 
+import entidades.Entidade;
 import entidades.Heroi;
-import entidades.NPC;
-import itens.ArmaPrincipal;
-import itens.consumo.Consumivel;
-
-import java.util.ArrayList;
 
 public class Cavaleiro extends Heroi {
 
-
-    public Cavaleiro(String nome, int maxHp, int hp, int forca, int nivel, int ouro, ArmaPrincipal armaPrincipal, ArrayList<Consumivel> inventario) {
-        super(nome, maxHp, hp, forca, nivel, ouro, armaPrincipal, inventario);
+    /*
+        Construtor de Cavaleiro
+    */
+    public Cavaleiro(String nome, int forca, int maxHp) {
+        super(nome, forca, maxHp);
     }
 
 
     @Override
-    public void atacar(NPC inimigo) {
-        if (inimigo.getHp() > this.forca){
-            this.hp -= (int) (inimigo.getForca() - 0.8);
-        }
+    public Entidade atacar(Entidade inimigo) {
+        return null;
+    }
 
-        if(this.hp > inimigo.getForca()){
-        }
+    @Override
+    public void usarPocao() {
+
+    }
+
+    @Override
+    public void mostrarDetalhes() {
+
     }
 }
