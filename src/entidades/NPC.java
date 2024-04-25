@@ -1,6 +1,6 @@
 package entidades;
 
-public class NPC extends Entidade{
+public class NPC extends Entidade {
     private int ouro;
 
     public NPC(String nome, int maxHp, int forca, int ouro) {
@@ -8,10 +8,10 @@ public class NPC extends Entidade{
         this.ouro = ouro;
     }
 
-
-    public Entidade atacar(Entidade inimigo) {
+    public Entidade atacar(Entidade heroi) {
         return null;
     }
+
 
     @Override
     public void mostrarDetalhes() {
@@ -22,4 +22,6 @@ public class NPC extends Entidade{
     public int getOuro() {
         return ouro;
     }
+
+
 }

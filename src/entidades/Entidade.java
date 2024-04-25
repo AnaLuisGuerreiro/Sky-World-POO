@@ -20,9 +20,20 @@ public abstract class Entidade {
         System.out.println("| Nick: " + nome + " | Força " + forca + " | Hp: " + hp + "/" + hpMax);
     }
 
+    public int receberDano(int dano){
+        return this.hp -= dano;
+    }
+
     // Getters e setters para os atributos
     public String getNome() {
         return nome;
     }
 
+    public int getForca() {
+        return this.forca;
+    }
+
+    public int getHp() {
+        return hp;
+    }
 }

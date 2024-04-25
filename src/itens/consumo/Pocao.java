@@ -8,8 +8,8 @@ public class Pocao extends Consumivel {
     private int vidaCurar;
     private int aumentoForca;
 
-    public Pocao(String nome, int preco, int vidaCurar, int aumentoForca, ArrayList<String> heroisPermitidos) {
-        super(nome, preco, heroisPermitidos);
+    public Pocao(String nome, int preco, int vidaCurar, int aumentoForca) {
+        super(nome, preco);
         this.vidaCurar = vidaCurar;
         this.aumentoForca = aumentoForca;
     }

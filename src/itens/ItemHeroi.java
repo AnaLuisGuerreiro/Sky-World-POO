@@ -7,10 +7,10 @@ public abstract class ItemHeroi {
     protected int preco;
     protected ArrayList<String> heroisPermitidos;
 
-    public ItemHeroi(String nome, int preco, ArrayList<String> heroisPermitidos) {
+    public ItemHeroi(String nome, int preco) {
         this.nome = nome;
         this.preco = preco;
-        this.heroisPermitidos = heroisPermitidos;
+        this.heroisPermitidos = new ArrayList<>();
     }
 
 
