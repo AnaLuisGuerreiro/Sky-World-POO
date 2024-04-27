@@ -18,8 +18,6 @@ public class Main {
         // Jogo
         Jogo jogo = new Jogo();
 
-
-
         // ########################## INTRO ################################
         System.out.println(Efeitos.BLUE + "☁☁☁☁☁☁☁☁☁☁☁☁☁☁☁☁☁");
         System.out.println(Efeitos.BOLD + Efeitos.BLUE + "       SKY WORLD");
@@ -39,11 +37,12 @@ public class Main {
                 """ + Efeitos.RESET;
         Efeitos.escrever(introText1); // Efeito texto lento
 
+        // Criação da personagem
         Heroi jogador = jogo.criarPersonagem();
 
         if (jogador != null) {
-            System.out.println("Personagem criado com sucesso!");
-            System.out.println("\nDetalhes da personagem:");
+            System.out.println(Efeitos.GREEN + "Personagem criado com sucesso!" + Efeitos.RESET);
+            System.out.println("\nDetalhes da nova personagem: ");
             jogador.mostrarDetalhes();
         } else {
             System.out.println("Erro ao criar personagem.");

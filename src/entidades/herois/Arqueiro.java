@@ -18,8 +18,8 @@ public class Arqueiro extends Heroi {
     @Override
     public Entidade atacar(NPC npc) {
         do {
-            npc.mostrarDetalhes();
-            heroiEscolherAtaque(npc);
+            npc.mostrarDetalhes(); // Mostrar npc
+            heroiEscolheAtaque(npc); // Escolha do ataque
 
             if (npc.getHp() <= 0) { // Verificar vida de npc apos ataque de heroi
                 Efeitos.escrever(Efeitos.GREEN + "Derrotaste o " + npc.getNome() + ". Ganhaste " + npc.getOuro() + "🥮" + Efeitos.RESET);
@@ -32,7 +32,7 @@ public class Arqueiro extends Heroi {
             // Ataque do npc
             int danoNpc = npc.getForca();
             int danoRecebido = (int) (danoNpc * 1.1);
-            this.receberDano(danoRecebido); // Vida heroi - ataque
+            this.receberDano(danoRecebido); // Vida heroi - força do npc com mais 10%
 
             if (this.hp <= 0) { // Verificar vida de heroi apos ataque de npc
                 System.out.println(Efeitos.RED + this.nome + " foste derrotado por " + npc.getNome() + Efeitos.RESET);
@@ -43,7 +43,7 @@ public class Arqueiro extends Heroi {
 
     @Override
     public void usarPocao() {
-
+        super.usarPocao();
     }
 
 

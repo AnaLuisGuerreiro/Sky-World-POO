@@ -14,6 +14,7 @@ import itens.consumo.Consumivel;
 import itens.consumo.ConsumivelCombate;
 import itens.consumo.Pocao;
 
+import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -61,8 +62,8 @@ public class Jogo {
 
         // Loop para distribuir os pontos
         while (pontosCriacao > 0) {
-            System.out.println("Pontos de criação disponiveis: " + pontosCriacao); // Apresentaçao dos pontos que tem
-            System.out.println("Quantos pontos para vida?");
+            System.out.println("Pontos de criação disponiveis: " + pontosCriacao + "🦠"); // Apresentaçao dos pontos que tem
+            System.out.println("\nQuantos pontos para vida🩸 ?");
             int vida = input.nextInt();
             if (vida <= pontosCriacao) { // Verificar se tem pontos suficientes para adicionar
                 pontosVida += vida;    // Adicionar à vida
@@ -71,8 +72,8 @@ public class Jogo {
                 System.out.println("Pontos insuficientes! Tenta novamente.");
             }
 
-            System.out.println("Pontos de criação restantes: " + pontosCriacao); // Apresentaçao dos pontos que ainda tem
-            System.out.println("Quantos pontos para força?");
+            System.out.println("Pontos de criação restantes: " + pontosCriacao + "🦠"); // Apresentaçao dos pontos que ainda tem
+            System.out.println("Quantos pontos para força💪🏽 ?");
             int forca = input.nextInt();
             if (forca * 5 <= pontosCriacao) { // Verificar se tem pontos suficientes para adicionar (5* mais o custo)
                 pontosForca += forca;       // Adicionar à força
@@ -145,8 +146,11 @@ public class Jogo {
 
     public void skyWorld(Heroi jogador) {
         Vendedor vendedor = criarVendedor();
+        String nomeHeroi = jogador.getClass().getName();
+        String simNao = "";
+
         int escolha;
-        System.out.println("Escolhe o teu proximo desafio.");
+        System.out.println("     Escolhe o teu proximo desafio.");
         System.out.println("1.Torre da Lua | 2.Labirinto dos Ventos");
         escolha = input.nextInt();
 
@@ -159,9 +163,32 @@ public class Jogo {
             vendedor.imprimirLoja();
             valeDasEstrelas(jogador);
         } else {
+            // Primeira sala
             labirintoDosVentos(jogador);
-            vendedor.imprimirLoja();
-            nimbusCitadel(jogador);
+
+            // Vendedor aparece
+            System.out.print(Efeitos.UNDERLINE + "Vendedor :" + Efeitos.RESET);
+            Efeitos.escrever(Efeitos.YELLOW + nomeHeroi + ", será que não precisas de comprar nada?! Dá um vista aos meus itens!" + Efeitos.RESET);
+
+            // Ciclo para se quiser ver ou nao os itens do mercador
+            do {
+               System.out.print("Queres ver os itens?");
+               simNao = input.next().toLowerCase();
+
+               if(!simNao.equals("s") && !simNao.equals("n")){
+                   System.out.println("Opção inválida, só s(sim) ou n (nao).");
+               }
+
+           } while (!simNao.equals("n"));
+
+            // Se heroi quiser ver itens do mercador
+            if(simNao.equalsIgnoreCase("s")){
+                vendedor.imprimirLoja(); // Mostrar loja
+            } else{ // Senão entra direto numa sala
+                Efeitos.escrever("CUIDADOOOO!!");
+                nimbusCitadel(jogador);
+            }
+
             vendedor.imprimirLoja();
             santuarioDasAurias(jogador);
             vendedor.imprimirLoja();
@@ -195,19 +222,26 @@ public class Jogo {
 
     public void labirintoDosVentos(Heroi jogador) {
 
-        String letra;
+        String letra1, letra2;
         ArmaPrincipal arcoIntermedio = new ArmaPrincipal("Arco Enterestrelar", 200, 90, 140);
 
-        System.out.println("Encontras-te o " + Efeitos.YELLOW + Efeitos.BOLD + "[Arco Enterestrelar]" + Efeitos.RESET);
+        Efeitos.escrever(Efeitos.YELLOW + "Os caminhos começam a se assemelhar bastante, a velocidade do vento é inimaginavel," +
+                " e não se encontra mais niguem... quando já não havia esperança de nada, algo reluziu ao longe!" +
+                "Não só foi encontrada a saida como também um bau!" + Efeitos.RESET);
+        System.out.println("Queres abrir? (s/n)");
+        letra1 = input.next();
 
+        if(letra1.equalsIgnoreCase("s")) {
+            System.out.println("WOOW! Encontras-te o " + Efeitos.YELLOW + Efeitos.BOLD + "[Arco Enterestrelar]" + Efeitos.RESET);
+        }
         if (jogador.getClass().getName().contains("Arqueiro")) {
             System.out.println("Queres trocar?");
-            letra = input.next();
-            if (letra.equalsIgnoreCase("s")) {
+            letra2 = input.next();
+            if (letra2.equalsIgnoreCase("s")) {
                 jogador.setArmaPrincipal(arcoIntermedio);
             }
         } else {
-            System.out.println("Esta arma não é para ti. Terás mais sorte numa proxima!");
+            System.out.println(Efeitos.RED + "Não podes utilizar esta arma. Terás mais sorte numa proxima!" + Efeitos.RESET);
         }
 
     }
@@ -266,12 +300,12 @@ public class Jogo {
         System.out.println("Tens 50% de probabilidade de ganhar ouro ou de morte!");
 
         do {
-            boolean val = rand.nextInt(2) == 0;
+            boolean cinquenta50 = rand.nextInt(2) == 0;
 
             System.out.println("Queres arriscar? (s/n)");
             letra = input.next();
 
-            if (val) {
+            if (cinquenta50) {
                 System.out.println("Ganhaste");
                 jogador.setOuro(jogador.getOuro() + 150);
             } else {

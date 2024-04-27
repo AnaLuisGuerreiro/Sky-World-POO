@@ -12,18 +12,28 @@ import java.util.ArrayList;
 public class Feiticeiro extends Heroi {
 
 
-    /*
-            Construtor Feiticeiro
-        */
+    /**
+     * Construtor de um Feiticeiro
+     * @param nome
+     * @param forca
+     * @param maxHp
+     * @param ouro
+     * @param armaPrincipal
+     */
     public Feiticeiro(String nome, int forca, int maxHp, int ouro, ArmaPrincipal armaPrincipal) {
         super(nome, forca, maxHp, ouro, armaPrincipal);
     }
 
+    /**
+     * Metodo de combate
+     * @param npc - inimigo
+     * @return um vencedor (npc ou heroi)
+     */
     @Override
     public Entidade atacar(NPC npc) {
         do {
-            npc.mostrarDetalhes();
-            heroiEscolherAtaque(npc);
+            npc.mostrarDetalhes(); // Detalhes do npc
+            heroiEscolheAtaque(npc); // Heroi escolhe ataque
 
             if (npc.getHp() <= 0) { // Verificar vida de npc apos ataque de heroi
                 Efeitos.escrever(Efeitos.GREEN + "Derrotaste o " + npc.getNome() + ". Ganhaste " + npc.getOuro() + "🥮" + Efeitos.RESET);
@@ -44,12 +54,17 @@ public class Feiticeiro extends Heroi {
         } while (true);
     }
 
+    /**
+     * Metodo para usar poção para aumentar vida ou força
+     */
     @Override
     public void usarPocao() {
         super.usarPocao();
     }
 
-
+    /**
+     * Metodo para mostrar detalhes da personagem
+     */
     @Override
     public void mostrarDetalhes() {
         System.out.println("-----------------------------------------------");

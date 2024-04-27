@@ -12,15 +12,18 @@ import java.util.Random;
 public class Vendedor {
     private ArrayList<ItemHeroi> loja;
 
+    /**
+     * Construtor de vendedor
+     */
     public Vendedor() {
         this.loja = new ArrayList<>();
     }
 
     /**
-     * Metodo para imprimir 10 items da loja
+     * Metodo para imprimir loja (apenas 10 itens)
      */
     public void imprimirLoja() {
-        System.out.println("=== Mercado Celestial ===");
+        System.out.println("=== 🌟🌌 Mercador Celestial! 🌌🌟 ===");
 
         int numItens = loja.size(); // Quantidade de itens disponiveis
 
@@ -35,15 +38,19 @@ public class Vendedor {
 
         Collections.shuffle(loja); // Baralhar a lista de itens
 
-        // Ciclo para mostrar os itens
+        // Ciclo para mostrar os 10 itens
         for (int i = 0; i < numItensMostrar; i++) {
-            ItemHeroi item = loja.get(i);
+            ItemHeroi item = loja.get(i); // Guardar item por id
             System.out.print(i+1 + " ");
             item.mostrarDetalhes();
         }
     }
 
-
+    /**
+     * Metodo para vender um item (consumiveis ou armas)
+     * @param heroi jogador que quer comprar
+     * @param item e item escolhido pelo index
+     */
     public void vender(Heroi heroi, int item) {
         ItemHeroi itemSelecionado = loja.get(item - 1); // Indice real do item
 
@@ -59,12 +66,12 @@ public class Vendedor {
             return;
         }
 
-        String classHeroi = heroi.getClass().getName();
+        String classeDoHeroi = heroi.getClass().getName(); // Guardar classe do heroi que quer comprar
         // Herois a null é consumivel
         if(itemSelecionado.getHeroisPermitidos() == null){
             heroi.addConsumivel((Consumivel) itemSelecionado);
-        } else if(!itemSelecionado.getHeroisPermitidos().contains(classHeroi)){
             // Verificar uso permitido por tipo de classe(heroi)
+        } else if(!itemSelecionado.getHeroisPermitidos().contains(classeDoHeroi)){
             System.out.println("Esse item não é para ti.");
             return;
         }
@@ -85,10 +92,20 @@ public class Vendedor {
         loja.remove(itemSelecionado);
     }
 
+    /**
+     * Metodo para adicionar um item à loja
+     * @param itemNovo (consumiveis ou armas)
+     */
     public void addItem(ItemHeroi itemNovo){
         loja.add(itemNovo);
     }
 
+    // --------------------------- Getters e setters dos atributos
+
+    /**
+     * Metodo para retornar a loja
+     * @return a loja (os seus itens)
+     */
     public ArrayList<ItemHeroi> getLoja() {
         return loja;
     }
