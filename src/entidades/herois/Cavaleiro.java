@@ -20,94 +20,62 @@ public class Cavaleiro extends Heroi {
         super(nome, forca, maxHp, ouro, armaPrincipal);
     }
 
+
     @Override
-    public Entidade atacar(Entidade npc) {
-        Scanner input = new Scanner(System.in);
-        int opcao, danoHeroi, danoNpc;
+    public Entidade atacar(NPC npc) {
+        int danoNpc; // Guardar força do npc
+
+        npc.mostrarDetalhes();
+        Efeitos.escrever(Efeitos.YELLOW + "👹 vai atacar! Cuidado!!" + Efeitos.RESET);
 
         // Inimigo ataca primeiro
         danoNpc = (int) (npc.getForca() * 0.8); // Primeiro ataque apenas 80% da força inicial
         this.receberDano(danoNpc); // Retirar dano à vida do heroi
+        this.mostrarDetalhes(); // Mostrar detalhes de heroi
 
-        // Heroi derrotado
+        // Heroi derrotado pelo primeiro ataque
         if (this.hp <= 0) {
             System.out.println(this.nome + " foste derrotado por " + npc.getNome());
-            return npc; // Retorna objeto inimigo
+            return npc; // Retorna inimigo (vencedor)
         }
 
         do {
-            System.out.println(Efeitos.BOLD + this.nome + Efeitos.RESET + " Escolhe o teu ataque!");
-            System.out.println("1.Ataque normal | 2.Ataque Especial | + 3.Ataque consumivel");
-            opcao = input.nextInt();
+            heroiEscolherAtaque(npc);
 
-            switch (opcao){
-                case 1:
-                    // Ataque do heroi (força + ataque da arma)
-                    danoHeroi = this.forca + this.getArmaPrincipal().getAtaque();
-                    npc.receberDano(danoHeroi); // Tirar dano à vida do npc
-                    break;
-                case 2:
-                    // Ataque do heroi (força + ataque especial da arma)
-                    danoHeroi = this.forca + this.getArmaPrincipal().getAtaqueEspecial();
-                    npc.receberDano(danoHeroi);
-                    break;
-                case 3:
-                    // Mostrar inventário de consumíveis para escolher
-                    System.out.println("Inventário de Consumíveis:");
-                    int index = 1;
-                    for (Consumivel consumivel : this.getInventario()) {
-                        if(consumivel instanceof ConsumivelCombate) {
-                            ConsumivelCombate consumivelCombate = (ConsumivelCombate) consumivel;
-                            System.out.println(index + ". " + consumivelCombate.getNome());
-                            index++;
-                        }
-                    }
-                    System.out.println("Escolha o número do consumível a usar:");
-                    int escolha = input.nextInt();
-
-                    // Ataque do heroi (força + ataque especial da arma)
-                    Consumivel consumivelEscolhido = this.getInventario().get(escolha);
-                    this.usarConsumivel();
+            if (npc.getHp() <= 0) { // Verificar vida de npc apos ataque de heroi
+                Efeitos.escrever(Efeitos.GREEN + "Derrotaste o " + npc.getNome() + ". Ganhaste " + npc.getOuro() + "🥮" + Efeitos.RESET);
+                this.aposVitoria(npc.getOuro()); // Ganhos do heroi pela vitoria
+                npc.restaurarVida(); // Restaura vida de npc para poder reutilizar
+                this.mostrarDetalhes();
+                return this; // Retorna heroi como vencedor
             }
 
-            // Ataque do heroi (força + ataque da arma)
-            danoHeroi = this.forca + this.getArmaPrincipal().getAtaque();
-            npc.receberDano(danoHeroi); // Tirar dano à vida do npc
+            // Ataque do npc
+            danoNpc = npc.getForca();
+            this.receberDano(danoNpc); // Vida heroi - ataque
 
-            if(npc.getHp() <= 0){
-                System.out.println();
+            if (this.hp <= 0) { // Verificar vida de heroi apos ataque de npc
+                System.out.println(Efeitos.RED + this.nome + " foste derrotado por " + npc.getNome() + Efeitos.RESET);
+                return npc; // Retorna o NPC como vencedor
             }
         } while (true);
 
-
-
     }
-
-    private void usarConsumivel(Consumivel consumivel, Entidade alvo) {
-        if (consumivel instanceof ConsumivelCombate) {
-            ConsumivelCombate consumivelCombate = (ConsumivelCombate) consumivel;
-            int dano = consumivelCombate.getAtaqueInstantaneo();
-            alvo.receberDano(dano); // Aplicar o efeito do consumível no alvo
-            // Remover o consumível usado do inventário
-            this.removeConsumivel(consumivel);
-        } else {
-            System.out.println("Este consumível não pode ser usado em combate.");
-        }
-    }
-
 
     @Override
     public void usarPocao() {
-
+        super.usarPocao();
     }
 
-    @Override
-    public void usarConsumivel() {
-
-    }
 
     @Override
     public void mostrarDetalhes() {
+        System.out.println("-----------------------------------------------");
+        System.out.print(" 🏇🏽 ");
+        super.mostrarDetalhes();
+        System.out.println("-----------------------------------------------");
 
     }
+
+
 }

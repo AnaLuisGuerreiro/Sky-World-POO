@@ -36,4 +36,20 @@ public abstract class Entidade {
     public int getHp() {
         return hp;
     }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setHpMax(int hpMax) {
+        this.hpMax = hpMax;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public void setForca(int forca) {
+        this.forca = forca;
+    }
 }

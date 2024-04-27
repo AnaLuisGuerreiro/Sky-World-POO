@@ -11,8 +11,5 @@ public abstract class Consumivel extends ItemHeroi {
         super(nome, preco);
     }
 
-    @Override
-    public void mostrarDetalhes() {
-        System.out.print("| " + nome + "  |  " + preco + "🥮 |");
-    }
+
 }

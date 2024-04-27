@@ -8,17 +8,18 @@ public class NPC extends Entidade {
         this.ouro = ouro;
     }
 
-    public Entidade atacar(Entidade heroi) {
-        return null;
-    }
-
-
     @Override
     public void mostrarDetalhes() {
-
+        System.out.println("-----------------------------------------------");
+        System.out.print(" 👹 ");
+        super.mostrarDetalhes();
+        System.out.println("-----------------------------------------------");
     }
 
-    // Getter para o atributo ouro
+    public void restaurarVida(){
+        hp = hpMax;
+    }
+
     public int getOuro() {
         return ouro;
     }

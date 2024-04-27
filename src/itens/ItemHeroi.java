@@ -14,9 +14,9 @@ public abstract class ItemHeroi {
     }
 
 
-    public abstract void mostrarDetalhes();
-
-
+    public void mostrarDetalhes(){
+        System.out.print("| " + nome + " | ");
+    };
 
     // Getters do item
     public String getNome() {

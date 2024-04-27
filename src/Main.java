@@ -3,8 +3,10 @@ import entidades.Heroi;
 import entidades.NPC;
 import entidades.Vendedor;
 import itens.ArmaPrincipal;
+import itens.consumo.Pocao;
 import jogo.Jogo;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -16,48 +18,6 @@ public class Main {
         // Jogo
         Jogo jogo = new Jogo();
 
-        // NPCS
-        NPC bot = new NPC("Cupido Desesperado", 30, 10, 10);
-
-        //          Armas
-
-        // Armas Cavaleiro
-        ArmaPrincipal espadaInicial = new ArmaPrincipal("Espada Enferrujada", 50, 25, 40);
-        espadaInicial.addHeroi("Cavaleiro");
-        ArmaPrincipal espadaIntermedia = new ArmaPrincipal("Espada Enterestrelar", 150, 50, 100);
-        espadaIntermedia.addHeroi("Cavaleiro");
-        ArmaPrincipal espadaAlta = new ArmaPrincipal("Espada Trovão", 300, 90, 140);
-        espadaAlta.addHeroi("Cavaleiro");
-
-        // Armas Feiticeiro
-        ArmaPrincipal bastaoInicial = new ArmaPrincipal("Bastão Enferrujado", 40, 20, 30);
-        bastaoInicial.addHeroi("Feiticeiro");
-        ArmaPrincipal bastaoIntermedio = new ArmaPrincipal("Bastão Enterestrelar", 100, 45, 90);
-        bastaoInicial.addHeroi("Feiticeiro");
-        ArmaPrincipal bastaoAlto = new ArmaPrincipal("Bastão trovão", 400, 100, 200);
-        bastaoInicial.addHeroi("Feiticeiro");
-
-        // Armas Arqueiro
-        ArmaPrincipal arcoInicial = new ArmaPrincipal("Arco Enferrujado", 50, 20, 40);
-        arcoInicial.addHeroi("Arqueiro");
-        ArmaPrincipal arcoIntermedio = new ArmaPrincipal("Arco Enterestrelar", 200, 90, 140);
-        arcoIntermedio.addHeroi("Arqueiro");
-        ArmaPrincipal arcoAlto = new ArmaPrincipal("Arco Trovão", 300, 100, 140);
-        arcoAlto.addHeroi("Arqueiro");
-
-
-        // Vendedor
-        Vendedor vendedor = new Vendedor();
-        // Loja - add items
-        vendedor.addItem(espadaInicial);
-        vendedor.addItem(espadaIntermedia);
-        vendedor.addItem(espadaAlta);
-        vendedor.addItem(bastaoInicial);
-        vendedor.addItem(bastaoIntermedio);
-        vendedor.addItem(bastaoAlto);
-        vendedor.addItem(arcoInicial);
-        vendedor.addItem(arcoIntermedio);
-        vendedor.addItem(arcoAlto);
 
 
         // ########################## INTRO ################################
@@ -81,12 +41,17 @@ public class Main {
 
         Heroi jogador = jogo.criarPersonagem();
 
-        // Tutorial
-        Efeitos.escrever(Efeitos.YELLOW + "Tens o teu primeiro desafio! Ajuda-nos!");
-        Efeitos.escrever("👹 👹 👹");
-        jogador.atacar(bot);
-        jogador.atacar(bot);
-        jogador.atacar(bot);
+        if (jogador != null) {
+            System.out.println("Personagem criado com sucesso!");
+            System.out.println("\nDetalhes da personagem:");
+            jogador.mostrarDetalhes();
+        } else {
+            System.out.println("Erro ao criar personagem.");
+        }
+
+        jogo.skyWorld(jogador);
+
+
 
     }
 }

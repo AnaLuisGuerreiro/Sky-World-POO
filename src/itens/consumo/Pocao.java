@@ -17,9 +17,12 @@ public class Pocao extends Consumivel {
     @Override
     public void mostrarDetalhes(){
         super.mostrarDetalhes();
-        System.out.print(" " + vidaCurar + "🩸 | " + "+" + aumentoForca +"💪🏽\n");
-        System.out.println("-------------------------------------------------");
+        System.out.print("+" + vidaCurar + " 🩸 | " + "+" + aumentoForca +" 💪🏽\n");
+        System.out.println("🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫");
 
     }
 
+    public int getVidaCurar() {
+        return vidaCurar;
+    }
 }

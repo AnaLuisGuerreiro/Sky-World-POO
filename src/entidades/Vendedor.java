@@ -59,8 +59,12 @@ public class Vendedor {
             return;
         }
 
-        // Verificar uso permitido por tipo de classe(heroi)
-        if(!itemSelecionado.getHeroisPermitidos().contains(heroi.getClass().getName())){
+        String classHeroi = heroi.getClass().getName();
+        // Herois a null é consumivel
+        if(itemSelecionado.getHeroisPermitidos() == null){
+            heroi.addConsumivel((Consumivel) itemSelecionado);
+        } else if(!itemSelecionado.getHeroisPermitidos().contains(classHeroi)){
+            // Verificar uso permitido por tipo de classe(heroi)
             System.out.println("Esse item não é para ti.");
             return;
         }
@@ -70,7 +74,7 @@ public class Vendedor {
             heroi.setArmaPrincipal((ArmaPrincipal) itemSelecionado); // Tornar arma a ArmaPrincipal do heroi
             System.out.println("Parabéns " + Efeitos.BOLD + itemSelecionado.getNome());
         } else{
-            heroi.getInventario().add((Consumivel) itemSelecionado); // Adicionar item ao inventário
+            heroi.getInventario().add((Consumivel) itemSelecionado); // Adicionar item ao inventário do heroi
             System.out.println("Parabéns, compraste o consumivel " + Efeitos.BOLD + itemSelecionado.getNome());
         }
 

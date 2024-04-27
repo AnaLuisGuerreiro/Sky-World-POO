@@ -13,7 +13,10 @@ public class ConsumivelCombate extends Consumivel {
     }
 
     public void mostrarDetalhes(){
-        System.out.print(" | " + ataqueInstantaneo + "🎯" );
+        super.mostrarDetalhes();
+        System.out.println(" | " + ataqueInstantaneo + " 🎯" );
+        System.out.println("🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫");
+
     }
 
     public int getAtaqueInstantaneo(){
