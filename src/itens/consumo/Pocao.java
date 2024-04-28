@@ -19,6 +19,7 @@ public class Pocao extends Consumivel {
         super(nome, preco);
         this.vidaCurar = vidaCurar;
         this.aumentoForca = aumentoForca;
+        this.heroisPermitidos = null;
     }
 
     /**

@@ -16,6 +16,7 @@ public class ConsumivelCombate extends Consumivel {
     public ConsumivelCombate(String nome, int preco, int ataqueInstantaneo) {
         super(nome, preco);
         this.ataqueInstantaneo = ataqueInstantaneo;
+        this.heroisPermitidos = null;
     }
 
     /**
@@ -23,7 +24,7 @@ public class ConsumivelCombate extends Consumivel {
      */
     public void mostrarDetalhes(){
         super.mostrarDetalhes();
-        System.out.println(" 💊| " + ataqueInstantaneo + " 🎯" );
+        System.out.println(" 💊| +" + ataqueInstantaneo + " 🎯" );
         System.out.println("🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫");
     }
 

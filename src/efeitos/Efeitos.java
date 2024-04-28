@@ -24,10 +24,10 @@ public class Efeitos {
     }
 
     public static void estrada(){
-        Efeitos.escrever("|      |      |\n" +
-                "|----  |  ----|\n" +
-                "|      |      |\n" +
-                "|----  |  ----|\n" +
-                "|      |      |\n");
+        Efeitos.escrever("|      |\n" +
+                "|----  |\n" +
+                "|      |\n" +
+                "|----  |\n" +
+                "|      |\n");
     }
 }

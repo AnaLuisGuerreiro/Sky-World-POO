@@ -23,7 +23,7 @@ public abstract class Entidade {
      * Metodo para mostrar os detalhes de uma entidade
      */
     public void mostrarDetalhes(){
-        System.out.print("| Nick: " + nome + " | Força " + forca + "💪🏽 | Hp: " + hp + "/" + hpMax + "🩸");
+        System.out.print("| Nick: " + nome + " | Hp: " + hp + "/" + hpMax + " 🩸 | Força: " + forca + " 💪🏽");
     }
 
     /**
@@ -50,13 +50,18 @@ public abstract class Entidade {
     public int getHp() {
         return hp;
     }
+    public int getHpMax(){
+        return this.hpMax;
+    }
 
     /**
      * Metodo para restabelecer a vida
      * @param hp da entidade
      */
-    public void setHp(int hp) {
-        this.hp = hp;
+    public void setHp(int novoHp) {
+        this.hp = novoHp;
     }
-
+    public void setHpMax(int novoMax){
+        this.hpMax = novoMax;
+    }
 }

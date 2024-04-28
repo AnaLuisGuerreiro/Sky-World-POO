@@ -19,6 +19,7 @@ public abstract class Heroi extends Entidade {
 
     /**
      * Construtor de um Heroi
+     *
      * @param nome
      * @param forca
      * @param maxHp
@@ -39,11 +40,12 @@ public abstract class Heroi extends Entidade {
     @Override
     public void mostrarDetalhes() {
         super.mostrarDetalhes();
-        System.out.println(" | " + ouro + "🥮");
+        System.out.println(" | " + ouro + " 🥮");
     }
 
     /**
      * Metodo de combate entre heroi e npc, diferente em cada heroi
+     *
      * @param npc inimigo
      * @return vencedor (heroi/npc)
      */
@@ -51,6 +53,7 @@ public abstract class Heroi extends Entidade {
 
     /**
      * Metodo para escolher um dos 3 ataques possiveis
+     *
      * @param npc inimigo para retirar vida
      */
     public void heroiEscolheAtaque(NPC npc) {
@@ -103,7 +106,7 @@ public abstract class Heroi extends Entidade {
             pocoes.get(i).mostrarDetalhes();
         }
 
-        System.out.println("Qual queres usar?");
+        System.out.println("Seleciona a poçao que queres usar:");
         int opcao = input.nextInt();
 
         this.hp += pocoes.get(opcao).getVidaCurar();
@@ -111,6 +114,7 @@ public abstract class Heroi extends Entidade {
 
     /**
      * Metodo para executar um ataque normal contra um npc
+     *
      * @param npc a qual vai dar o dano
      */
     public void ataqueNormal(NPC npc) {
@@ -121,6 +125,7 @@ public abstract class Heroi extends Entidade {
 
     /**
      * Metodo para executar um ataque especial contra um npc
+     *
      * @param npc a qual vai dar o dano
      */
     public void ataqueEspecial(NPC npc) {
@@ -132,6 +137,7 @@ public abstract class Heroi extends Entidade {
     /**
      * Metodo para atacar com um consumivel, mostra o inventario desses mesmos itens
      * e pode selecionar um para atacar
+     *
      * @param npc a qual vai ser retirada vida
      */
     private void usarConsumivelCombate(NPC npc) {
@@ -161,6 +167,7 @@ public abstract class Heroi extends Entidade {
 
     /**
      * Adiciona um consumivel ao inventario do heroi
+     *
      * @param consumivel a ser adicionado
      */
     public void addConsumivel(Consumivel consumivel) {
@@ -169,6 +176,7 @@ public abstract class Heroi extends Entidade {
 
     /**
      * Metodo para remover consumivel do inventário
+     *
      * @param consumivel
      */
     public void removeConsumivel(Consumivel consumivel) {
@@ -177,6 +185,7 @@ public abstract class Heroi extends Entidade {
 
     /**
      * Metodo para adicionar todos os ganhos por derrotar um npc
+     *
      * @param ouroNpc
      */
     public void aposVitoria(int ouroNpc) {
@@ -186,7 +195,7 @@ public abstract class Heroi extends Entidade {
         this.ouro += ouroNpc;
     }
 
-    public void rondasInimigos(Heroi jogador , int numInimigos, NPC bot){
+    public void rondasInimigos(Heroi jogador, int numInimigos, NPC bot) {
         for (int i = 0; i < numInimigos; i++) {
             System.out.println("Turno " + (i + 1) + ":");
             jogador.atacar(bot); // Jogador ataca o bot
@@ -215,6 +224,10 @@ public abstract class Heroi extends Entidade {
      */
     public int getOuro() {
         return ouro;
+    }
+
+    public String getNome() {
+        return this.nome;
     }
 
     /**

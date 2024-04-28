@@ -20,10 +20,9 @@ public class NPC extends Entidade {
      */
     @Override
     public void mostrarDetalhes() {
-        System.out.println("-----------------------------------------------");
-        System.out.print(" 👹 ");
-        super.mostrarDetalhes();
-        System.out.println("\n-----------------------------------------------");
+        System.out.println("---------------------------------------------------");
+        System.out.println(" 👹 | " + nome + " | Força: " + forca + " 💪🏽 | Hp: " + hp + "/" + hpMax + " 🩸");
+        System.out.println("---------------------------------------------------");
     }
 
     /**
@@ -43,10 +42,8 @@ public class NPC extends Entidade {
         return ouro;
     }
 
-    /**
-     * @return nome do npc
-     */
-    public String getNome() {
-        return this.nome;
+    public String  getNome() {
+        return nome;
     }
+
 }
