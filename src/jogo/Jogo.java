@@ -32,7 +32,7 @@ public class Jogo {
         // Escolhas do utilizador
         System.out.print("Introduz o teu nick: ");
         nick = input.next();
-        System.out.println("Bem vindo(a) " + Efeitos.BOLD + nick + Efeitos.RESET);
+        System.out.println("Bem vindo(a) " + Efeitos.BOLD + Efeitos.YELLOW + nick + Efeitos.RESET);
 
         System.out.println("        Escolhe a tua classe: ");
         System.out.println("1.Arqueiro | 2.Cavaleiro | 3.Feiticeiro");
@@ -146,7 +146,8 @@ public class Jogo {
 
     public void skyWorld(Heroi jogador) {
         Vendedor vendedor = criarVendedor();
-        String nomeHeroi = jogador.getClass().getName();
+        String className = jogador.getClass().getName();
+        String nomeHeroi = className.substring(className.lastIndexOf('.') + 1); // Extrair apenas nome da classe do heroi
         String simNao = "";
 
         int escolha;
@@ -163,26 +164,29 @@ public class Jogo {
             vendedor.imprimirLoja();
             valeDasEstrelas(jogador);
         } else {
-            // Primeira sala
+            Efeitos.estrada();
+            // Jogar primeira sala escolhida
             labirintoDosVentos(jogador);
 
             // Vendedor aparece
-            System.out.print(Efeitos.UNDERLINE + "Vendedor :" + Efeitos.RESET);
-            Efeitos.escrever(Efeitos.YELLOW + nomeHeroi + ", será que não precisas de comprar nada?! Dá um vista aos meus itens!" + Efeitos.RESET);
+            System.out.print(Efeitos.UNDERLINE + "👳🏽‍♂️ Vendedor : " + Efeitos.RESET);
+            Efeitos.escrever(Efeitos.YELLOW + nomeHeroi + ", será que não precisas de comprar nada?!\n" +
+                    "Dá um vista de olhos aos meus itens!" + Efeitos.RESET);
 
             // Ciclo para se quiser ver ou nao os itens do mercador
             do {
-               System.out.print("Queres ver os itens?");
+               System.out.print("Queres ver os itens? (s/n)");
                simNao = input.next().toLowerCase();
 
                if(!simNao.equals("s") && !simNao.equals("n")){
-                   System.out.println("Opção inválida, só s(sim) ou n (nao).");
+                   System.out.println("Opção inválida, só s(sim) ou n(nao).");
                }
 
-           } while (!simNao.equals("n"));
+           } while (!simNao.equals("n") && !simNao.equals("s"));
 
             // Se heroi quiser ver itens do mercador
             if(simNao.equalsIgnoreCase("s")){
+                System.out.println();
                 vendedor.imprimirLoja(); // Mostrar loja
             } else{ // Senão entra direto numa sala
                 Efeitos.escrever("CUIDADOOOO!!");
@@ -198,82 +202,89 @@ public class Jogo {
 
     }
 
-    public void nuvemMistica(Heroi jogador) {
+    private void nuvemMistica(Heroi jogador) {
         System.out.println("Deparaste-te com uma nuvem densa, à medida que se foi dissipando, encontras-te uma bau cheio de ouro.");
         System.out.println("[50🥮 adicionado à tua bolsa]");
 
         jogador.setOuro(jogador.getOuro() + 50);
     }
 
-    public void nimbusCitadel(Heroi jogador) {
+    private void nimbusCitadel(Heroi jogador) {
         System.out.println("Azar perdeste 30");
         jogador.setOuro(jogador.getOuro() - 30);
     }
 
-    public void torreDaLua(Entidade jogador) {
+    private void torreDaLua(Entidade jogador) {
         System.out.println("Perdeste 20vida");
         jogador.setHp(jogador.getHp() - 20);
     }
 
-    public void valeDasEstrelas(Entidade jogador) {
+    private void valeDasEstrelas(Entidade jogador) {
         System.out.println("Ganhaste 30vida");
         jogador.setHp(jogador.getHp() + 30);
     }
 
-    public void labirintoDosVentos(Heroi jogador) {
+    private void labirintoDosVentos(Heroi jogador) {
 
         String letra1, letra2;
         ArmaPrincipal arcoIntermedio = new ArmaPrincipal("Arco Enterestrelar", 200, 90, 140);
 
         Efeitos.escrever(Efeitos.YELLOW + "Os caminhos começam a se assemelhar bastante, a velocidade do vento é inimaginavel," +
-                " e não se encontra mais niguem... quando já não havia esperança de nada, algo reluziu ao longe!" +
-                "Não só foi encontrada a saida como também um bau!" + Efeitos.RESET);
-        System.out.println("Queres abrir? (s/n)");
-        letra1 = input.next();
+                "\ne não se encontra mais niguem... quando já não havia esperança de nada, algo reluziu ao longe!" +
+                "\nNão só encontraste a saída como também um bau!" + Efeitos.RESET);
 
-        if(letra1.equalsIgnoreCase("s")) {
-            System.out.println("WOOW! Encontras-te o " + Efeitos.YELLOW + Efeitos.BOLD + "[Arco Enterestrelar]" + Efeitos.RESET);
-        }
-        if (jogador.getClass().getName().contains("Arqueiro")) {
-            System.out.println("Queres trocar?");
-            letra2 = input.next();
-            if (letra2.equalsIgnoreCase("s")) {
-                jogador.setArmaPrincipal(arcoIntermedio);
+        do { // Opção de abrir ou não o bau
+            System.out.println("Queres abrir? (s/n)");
+            letra1 = input.next().toLowerCase();
+            if(!letra1.equals("s") && !letra1.equals("n")){
+                System.out.println(Efeitos.RED + "Opção inválida. Insere de novo (s/n)" + Efeitos.RESET);
             }
-        } else {
-            System.out.println(Efeitos.RED + "Não podes utilizar esta arma. Terás mais sorte numa proxima!" + Efeitos.RESET);
+        } while(!letra1.equals("s") && !letra1.equals("n"));
+
+
+        if(letra1.equals("s")) { // Entrar apenas quando é selecionado "s"
+            System.out.println("WOOW! Encontras-te o " + Efeitos.YELLOW + Efeitos.BOLD + "[Arco Enterestrelar]" + Efeitos.RESET);
+
+            if (jogador.getClass().getName().contains("Arqueiro")) { // Verificar se é da classe heroi que pode usar a arma
+                System.out.println("Queres trocar com a tua arma atual? (s/n)");
+                letra2 = input.next();
+                if (letra2.equalsIgnoreCase("s")) {
+                    // Calcular a diferença de ataque de uma arma para a outra
+                    int maisAtaque = arcoIntermedio.getAtaque() - jogador.getArmaPrincipal().getAtaque();
+                    // Calcular a diferença de ataque especial de uma arma para a outra
+                    int maisEspecial = arcoIntermedio.getAtaqueEspecial() - jogador.getArmaPrincipal().getAtaqueEspecial();
+
+                    System.out.println("Boa! Equipaste uma nova arma!" + Efeitos.GREEN + " +" + maisAtaque + "🗡 | +" + maisEspecial + "💥\n" + Efeitos.RESET);
+                    jogador.setArmaPrincipal(arcoIntermedio); // Atribuir arma como arma principal
+                }
+            } else {
+                System.out.println(Efeitos.RED + "Não podes utilizar esta arma. Terás mais sorte numa proxima!" + Efeitos.RESET);
+            }
         }
+
 
     }
 
-    public void grutaCelestial(Heroi jogador) {
+    private void grutaCelestial(Heroi jogador) {
         boolean val = rand.nextInt(2) == 0;
         NPC bot = new NPC("Unicornio preto", 50, 20, 10);
 
         if (val) {
-            System.out.println("3 inimigos");
             // 3 inimigos
-            for (int i = 0; i < 3; i++) {
-                System.out.println("Turno " + (i + 1) + ":");
-                jogador.atacar(bot); // Jogador ataca o bot
-                System.out.println(); // Pular linha entre os turnos
-            }
+            Efeitos.escrever(Efeitos.YELLOW + "Ups... tiveste azar... encontraste 3 inimigos!" + Efeitos.RESET);
+           jogador.rondasInimigos(jogador,3,bot);
         } else {
-            System.out.println("2 inimigos");
             // 2 inimigos
-            for (int i = 0; i < 2; i++) {
-                System.out.println("Turno " + (i + 1) + ":");
-                jogador.atacar(bot); // Jogador ataca o bot
-                System.out.println(); // Pular linha entre os turnos
-            }
+            Efeitos.escrever(Efeitos.YELLOW + "Encontraste apenas 2 inimigos. Derrota-os!" + Efeitos.RESET);
+            jogador.rondasInimigos(jogador,2,bot);
         }
 
     }
 
-    public void santuarioDasAurias(Heroi jogador) {
+    private void santuarioDasAurias(Heroi jogador) {
         double probabilidade = rand.nextDouble(100.0);
         int numeroInimigos;
-        NPC bot = new NPC("fkfk preto", 50, 20, 10);
+        NPC bot = new NPC("Dragão Água", 50, 20, 10);
 
         if (probabilidade < 50) {
             numeroInimigos = 1;
@@ -283,21 +294,18 @@ public class Jogo {
             numeroInimigos = 3;
         }
 
-        // Ronda inimigos
+        // Ronda inimigos consoante as probabilidades
         System.out.println(numeroInimigos + "a enfrentar");
-        for (int i = 0; i < numeroInimigos; i++) {
-            System.out.println("Turno " + (i + 1) + ":");
-            jogador.atacar(bot); // Jogador ataca o bot
-            System.out.println(); // Pular linha entre os turnos
-        }
+        jogador.rondasInimigos(jogador,numeroInimigos,bot);
 
     }
 
-    public void cavernaDaEstrelaCadente(Heroi jogador) {
+    private void cavernaDaEstrelaCadente(Heroi jogador) {
         String letra;
 
-        System.out.println("Totem da gloria");
-        System.out.println("Tens 50% de probabilidade de ganhar ouro ou de morte!");
+        System.out.println("          === 💰 Tontem da Glória 💀 ===");
+
+        System.out.println("Tens 50% de probabilidade de ganhar ouro ou... por outro lado, morte.");
 
         do {
             boolean cinquenta50 = rand.nextInt(2) == 0;
@@ -306,10 +314,10 @@ public class Jogo {
             letra = input.next();
 
             if (cinquenta50) {
-                System.out.println("Ganhaste");
+                Efeitos.escrever("PARABENS! Ganhas-te 150🥮");
                 jogador.setOuro(jogador.getOuro() + 150);
             } else {
-                System.out.println("Game over");
+                Efeitos.escrever(Efeitos.RED + "GAME OVER" + Efeitos.RESET);
                 jogador.setHp(0);
                 return;
             }

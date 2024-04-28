@@ -27,8 +27,8 @@ public class ArmaPrincipal extends ItemHeroi {
     @Override
     public void mostrarDetalhes() {
         super.mostrarDetalhes();
-        System.out.println(" | +" + ataque + " 🗡" + " | +" + ataqueEspecial + " 💥" + " | " + heroisPermitidos);
-        System.out.println("🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫");
+        System.out.println(" ⚔ | +" + ataque + " 🗡" + " | +" + ataqueEspecial + " 💥" + " | " + heroisPermitidos);
+        System.out.println("🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫");
     }
 
     /**

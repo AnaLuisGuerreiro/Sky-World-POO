@@ -23,7 +23,7 @@ public class Vendedor {
      * Metodo para imprimir loja (apenas 10 itens)
      */
     public void imprimirLoja() {
-        System.out.println("=== 🌟🌌 Mercador Celestial! 🌌🌟 ===");
+        System.out.println("          === 🌟🌌 Mercador Celestial 🌌🌟 ===");
 
         int numItens = loja.size(); // Quantidade de itens disponiveis
 

@@ -23,8 +23,8 @@ public class ConsumivelCombate extends Consumivel {
      */
     public void mostrarDetalhes(){
         super.mostrarDetalhes();
-        System.out.println(" | " + ataqueInstantaneo + " 🎯" );
-        System.out.println("🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫");
+        System.out.println(" 💊| " + ataqueInstantaneo + " 🎯" );
+        System.out.println("🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫🌫");
     }
 
     // --------------------------- Getters e setters dos atributos
@@ -36,10 +36,5 @@ public class ConsumivelCombate extends Consumivel {
         return this.ataqueInstantaneo;
     }
 
-    /**
-     * @return nome do consumivel
-     */
-    public String getNome(){
-        return this.nome;
-    }
+
 }

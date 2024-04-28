@@ -83,10 +83,10 @@ public class Cavaleiro extends Heroi {
      */
     @Override
     public void mostrarDetalhes() {
-        System.out.println("-----------------------------------------------");
+        System.out.println("----------------------------------------------------");
         System.out.print(" 🏇🏽 ");
         super.mostrarDetalhes();
-        System.out.println("-----------------------------------------------");
+        System.out.println("----------------------------------------------------");
 
     }
 

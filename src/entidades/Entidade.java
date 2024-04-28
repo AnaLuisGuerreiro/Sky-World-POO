@@ -23,7 +23,7 @@ public abstract class Entidade {
      * Metodo para mostrar os detalhes de uma entidade
      */
     public void mostrarDetalhes(){
-        System.out.print("| Nick: " + nome + " | Força " + forca + " | Hp: " + hp + "/" + hpMax);
+        System.out.print("| Nick: " + nome + " | Força " + forca + "💪🏽 | Hp: " + hp + "/" + hpMax + "🩸");
     }
 
     /**

@@ -22,4 +22,12 @@ public class Efeitos {
             e.printStackTrace();
         }
     }
+
+    public static void estrada(){
+        Efeitos.escrever("|      |      |\n" +
+                "|----  |  ----|\n" +
+                "|      |      |\n" +
+                "|----  |  ----|\n" +
+                "|      |      |\n");
+    }
 }

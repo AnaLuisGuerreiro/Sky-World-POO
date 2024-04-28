@@ -23,7 +23,7 @@ public class NPC extends Entidade {
         System.out.println("-----------------------------------------------");
         System.out.print(" 👹 ");
         super.mostrarDetalhes();
-        System.out.println("-----------------------------------------------");
+        System.out.println("\n-----------------------------------------------");
     }
 
     /**

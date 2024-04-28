@@ -186,6 +186,14 @@ public abstract class Heroi extends Entidade {
         this.ouro += ouroNpc;
     }
 
+    public void rondasInimigos(Heroi jogador , int numInimigos, NPC bot){
+        for (int i = 0; i < numInimigos; i++) {
+            System.out.println("Turno " + (i + 1) + ":");
+            jogador.atacar(bot); // Jogador ataca o bot
+            System.out.println(); // Pular linha entre os turnos
+        }
+    }
+
     // --------------------------- Getters e setters dos atributos
 
     /**

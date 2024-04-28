@@ -18,7 +18,8 @@ public class Main {
         // Jogo
         Jogo jogo = new Jogo();
 
-        // ########################## INTRO ################################
+        // ############################## INTRO ####################################
+/*
         System.out.println(Efeitos.BLUE + "☁☁☁☁☁☁☁☁☁☁☁☁☁☁☁☁☁");
         System.out.println(Efeitos.BOLD + Efeitos.BLUE + "       SKY WORLD");
         System.out.println(Efeitos.BLUE + "☁☁☁☁☁☁☁☁☁☁☁☁☁☁☁" + Efeitos.RESET);
@@ -36,11 +37,14 @@ public class Main {
                 Agora mais que nunca precisaremos da tua ajuda, precisamos de TI!
                 """ + Efeitos.RESET;
         Efeitos.escrever(introText1); // Efeito texto lento
+*/
+        // ########################## FIM DA INTRO ################################
 
+        // ###### INICIO JOGO ######
         // Criação da personagem
         Heroi jogador = jogo.criarPersonagem();
 
-        if (jogador != null) {
+        if (jogador != null) { // Verificar se foi feita a criação corretamente
             System.out.println(Efeitos.GREEN + "Personagem criado com sucesso!" + Efeitos.RESET);
             System.out.println("\nDetalhes da nova personagem: ");
             jogador.mostrarDetalhes();
@@ -48,9 +52,10 @@ public class Main {
             System.out.println("Erro ao criar personagem.");
         }
 
+        // História e fluxo do jogo
         jogo.skyWorld(jogador);
 
-
+        input.close(); // Fechar scanner
 
     }
 }
