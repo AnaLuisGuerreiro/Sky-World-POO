@@ -18,16 +18,10 @@ public class Main {
         Jogo jogo = new Jogo();
 
         // ###### INICIO JOGO ######
+        jogo.intro();
+
         // Criação da personagem
         Heroi jogador = jogo.criarPersonagem();
-
-        if (jogador != null) { // Verificar se foi feita a criação corretamente
-            System.out.println(Efeitos.GREEN + "Personagem criado com sucesso!" + Efeitos.RESET);
-            System.out.println("\nDetalhes da nova personagem: ");
-            jogador.mostrarDetalhes();
-        } else {
-            System.out.println("Erro ao criar personagem.");
-        }
 
         // História e fluxo do jogo
         jogo.skyWorld(jogador);

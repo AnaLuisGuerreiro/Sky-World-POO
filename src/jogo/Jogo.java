@@ -103,6 +103,14 @@ public class Jogo {
                 break;
         }
 
+        if (heroi != null) { // Verificar se foi feita a criação corretamente
+            System.out.println(Efeitos.GREEN + "Personagem criado com sucesso!" + Efeitos.RESET);
+            System.out.println("\nDetalhes da nova personagem: ");
+            heroi.mostrarDetalhes();
+        } else {
+            System.out.println("Erro ao criar personagem.");
+        }
+
         return heroi;
 
     }
@@ -118,11 +126,7 @@ public class Jogo {
         Efeitos.escrever("👹 👹 👹");
 
         // Repetir o ataque do jogador três vezes
-        for (int i = 0; i < 3; i++) {
-            System.out.println("Turno " + (i + 1) + ":");
-            jogador.atacar(bot); // Jogador ataca o bot
-            System.out.println(); // Pular linha entre os turnos
-        }
+        jogador.rondasInimigos(jogador, 3, bot);
 
 
         // Ciclo para mostrar os itens
@@ -132,19 +136,10 @@ public class Jogo {
             item.mostrarDetalhes();
         }
 
-        int comprado;
-        System.out.print("Qual comprar:");
-        comprado = input.nextInt();
-
-        vendedor.getLoja().remove(comprado);
-        ItemHeroi itemComprado = vendedor.getLoja().get(comprado - 1);
-
-        jogador.getInventario().add((Consumivel) itemComprado);
-        jogador.usarPocao();
-        jogador.mostrarDetalhes();
+        vendedor.imprimirLoja(jogador);
     }
 
-    private void intro() throws InterruptedException {
+    public void intro() throws InterruptedException {
         System.out.println(Efeitos.BLUE + "☁☁☁☁☁☁☁☁☁☁☁☁☁☁☁☁☁");
         System.out.println(Efeitos.BOLD + Efeitos.BLUE + "       SKY WORLD");
         System.out.println(Efeitos.BLUE + "☁☁☁☁☁☁☁☁☁☁☁☁☁☁☁" + Efeitos.RESET);
@@ -165,8 +160,7 @@ public class Jogo {
     }
 
     public void skyWorld(Heroi jogador) throws InterruptedException {
-        // intro();
-        // tutorial();
+        tutorial(jogador);
 
         Vendedor vendedor = criarVendedor();
         String className = jogador.getClass().getName();

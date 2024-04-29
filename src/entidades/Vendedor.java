@@ -92,15 +92,14 @@ public class Vendedor {
         if (itemSelecionado instanceof ArmaPrincipal) {
             heroi.setArmaPrincipal((ArmaPrincipal) itemSelecionado); // Tornar arma a ArmaPrincipal do heroi
             System.out.println("Parabéns " + Efeitos.BOLD + Efeitos.RED + itemSelecionado.getNome() + Efeitos.RESET);
-            System.out.println("Tens " + heroi.ouro + "🥮"); // Mostrar ouro restante
         } else {
             heroi.getInventario().add((Consumivel) itemSelecionado); // Adicionar item ao inventário do heroi
             System.out.println("Parabéns, compraste o consumivel " + Efeitos.BOLD + Efeitos.YELLOW + itemSelecionado.getNome() + Efeitos.RESET);
-            System.out.println("Tens " + heroi.ouro + "🥮");
         }
 
         // Retirar valor do item ao ouro do heroi
         heroi.setOuro(heroi.getOuro() - itemSelecionado.getPreco());
+        System.out.println("Tens " + heroi.getOuro() + "🥮"); // Mostrar ouro restante
 
         // Remover item da loja
         loja.remove(itemSelecionado);
