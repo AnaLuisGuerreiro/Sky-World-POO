@@ -41,4 +41,8 @@ public class Pocao extends Consumivel {
     public int getVidaCurar() {
         return vidaCurar;
     }
+
+    public int getAumentoForca() {
+        return aumentoForca;
+    }
 }

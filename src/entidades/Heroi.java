@@ -88,28 +88,37 @@ public abstract class Heroi extends Entidade {
      */
     public void usarPocao() {
         ArrayList<Pocao> pocoes = new ArrayList<>(); // Guardar apenas as poções
+        ArrayList<ConsumivelCombate> consumiveisCombate = new ArrayList<>(); // Guardar apenas as poções
 
-        System.out.println("=== 🎒 Inventário 🎒 ===");
-        if (this.getInventario().size() > 0) { // Verificar se o inventário não está vazio
+
+        System.out.println("=== 🎒 Inventário consumiveis 🎒 ===");
+        if (!this.getInventario().isEmpty()) { // Verificar se o inventário não está vazio
             for (Consumivel consumivel : this.getInventario()) {
                 if (consumivel instanceof Pocao) { // Verificar os consumiveis que sejam poção
                     pocoes.add((Pocao) consumivel); // Adicionar ao novo array de poções
                 }
             }
+            for (Consumivel consumivelCombate : this.getInventario()) {
+                if (consumivelCombate instanceof ConsumivelCombate) { // Buscar apenas os consumiveis de combate
+                    consumiveisCombate.add((ConsumivelCombate) consumivelCombate);
+                }
+            }
+
+            // Ciclo para mostrar as poçoes
+            for (int i = 0; i < pocoes.size(); i++) {
+                System.out.print(i + 1 + " ");
+                pocoes.get(i).mostrarDetalhes();
+            }
+
+            System.out.println("Seleciona a poçao que queres usar:");
+            int opcao = input.nextInt();
+
+            this.hp += pocoes.get(opcao).getVidaCurar(); // Curar vida de heroi
+            this.forca += pocoes.get(opcao).getAumentoForca(); // Aumentar força de heroi
         } else {
             System.out.println("Sem poções no inventário.");
         }
 
-        // Ciclo para mostrar as poçoes
-        for (int i = 0; i < pocoes.size(); i++) {
-            System.out.print(i + 1 + " ");
-            pocoes.get(i).mostrarDetalhes();
-        }
-
-        System.out.println("Seleciona a poçao que queres usar:");
-        int opcao = input.nextInt();
-
-        this.hp += pocoes.get(opcao).getVidaCurar();
     }
 
     /**
@@ -141,28 +150,37 @@ public abstract class Heroi extends Entidade {
      * @param npc a qual vai ser retirada vida
      */
     private void usarConsumivelCombate(NPC npc) {
+        ArrayList<ConsumivelCombate> consumiveisCombate = new ArrayList<>(); // Guardar apenas as poções
+
         // Mostrar os consumiveis disponiveis
         System.out.println("Inventário de Consumíveis:");
-        int index = 1;
-        for (Consumivel consumivel : this.getInventario()) {
-            if (consumivel instanceof ConsumivelCombate) { // Buscar apenas os consumiveis de combate
-                ConsumivelCombate consumivelCombate = (ConsumivelCombate) consumivel;
-                System.out.println(index + ". " + consumivelCombate.getNome()); // Imprimir detalhes.
-                index++;
-            }
-        }
-        System.out.println("Escolha o número do consumível a usar:");
-        int escolha = input.nextInt();
 
-        if (escolha >= 1) { // Verificar se a escolha é valida
-            Consumivel consumivelEscolhido = this.getInventario().get(escolha - 1); // Buscar ao inventario a escolha certa pelo indice
-            ConsumivelCombate consumivelCombate = (ConsumivelCombate) consumivelEscolhido;
-            int dano = consumivelCombate.getAtaqueInstantaneo(); // Dano do consumivel
-            npc.receberDano(dano);
-            this.removeConsumivel(consumivelEscolhido); // Remover o consumível do inventário
-        } else {
-            System.out.println(Efeitos.RED + "Inválido, tenta de novo." + Efeitos.RESET);
+        if(!this.getInventario().isEmpty()) {
+            for (Consumivel consumivelCombate : this.getInventario()) {
+                if (consumivelCombate instanceof ConsumivelCombate) { // Buscar apenas os consumiveis de combate
+                    consumiveisCombate.add((ConsumivelCombate) consumivelCombate);
+                }
+            }
+        } else{
+            System.out.println("Não tens consumiveis de combate no inventário.");
+            return;
         }
+
+        int escolha;
+
+        do {
+            System.out.println("Escolha o número do consumível a usar (0.Sair):");
+            escolha = input.nextInt();
+
+            if (escolha >= 1 && escolha <= this.getInventario().size()) { // Verificar se a escolha é valida
+                ConsumivelCombate consumivelEscolhido = consumiveisCombate.get(escolha - 1); // Indice real do consumivel
+                int dano = (consumivelEscolhido).getAtaqueInstantaneo(); // Dano do consumivel
+                npc.receberDano(dano);
+                this.removeConsumivel(consumivelEscolhido); // Remover o consumível do inventário
+            } else {
+                System.out.println(Efeitos.RED + "Inválido, tenta de novo." + Efeitos.RESET);
+            }
+        }while (escolha < 1 );
     }
 
     /**

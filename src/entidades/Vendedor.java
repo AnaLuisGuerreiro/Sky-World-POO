@@ -46,7 +46,7 @@ public class Vendedor {
             System.out.print(i + 1 + " ");
             item.mostrarDetalhes();
         }
-        System.out.println("Carteira: " + jogador.ouro + "🥮");
+
         int opcao;
 
         do {

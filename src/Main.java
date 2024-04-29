@@ -18,7 +18,7 @@ public class Main {
         Jogo jogo = new Jogo();
 
         // ###### INICIO JOGO ######
-        jogo.intro();
+       // jogo.intro();
 
         // Criação da personagem
         Heroi jogador = jogo.criarPersonagem();

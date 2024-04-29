@@ -123,18 +123,10 @@ public class Jogo {
 
         // Tutorial
         Efeitos.escrever(Efeitos.YELLOW + "Tens o teu primeiro desafio! Ajuda-nos!" + Efeitos.RESET);
-        Efeitos.escrever("👹 👹 👹");
+        Efeitos.escrever("👹 👹 ");
 
         // Repetir o ataque do jogador três vezes
-        jogador.rondasInimigos(jogador, 3, bot);
-
-
-        // Ciclo para mostrar os itens
-        for (int i = 0; i < vendedor.getLoja().size(); i++) {
-            ItemHeroi item = vendedor.getLoja().get(i);
-            System.out.print(i + 1 + " ");
-            item.mostrarDetalhes();
-        }
+        jogador.rondasInimigos(jogador, 2, bot);
 
         vendedor.imprimirLoja(jogador);
     }
