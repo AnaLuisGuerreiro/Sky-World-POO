@@ -6,17 +6,62 @@ public abstract class Entidade {
     protected int hp;
     protected int forca;
 
+    protected int hpMaxInicial;
+    protected int hpInicial;
+    protected int forcaInicial;
+
+    public void setHpMaxInicial(int hpMaxInicial) {
+        this.hpMaxInicial = hpMaxInicial;
+    }
+
+    public void setHpInicial(int hpInicial) {
+        this.hpInicial = hpInicial;
+    }
+
+    public void setForca(int forca) {
+        this.forca = forca;
+    }
+
+    public void setForcaInicial(int forcaInicial) {
+        this.forcaInicial = forcaInicial;
+    }
+
+    public int getHpMaxInicial() {
+        return hpMaxInicial;
+    }
+
+    public int getHpInicial() {
+        return hpInicial;
+    }
+
+    public int getForcaInicial() {
+        return forcaInicial;
+    }
+
     /**
      * Construtor de uma entidade
      * @param nome da personagem
      * @param hpMax
      * @param forca
      */
+    public Entidade(String nome, int hpMax, int forca, int hpMaxInicial, int forcaInicial) {
+        this.nome = nome;
+        this.hpMax = hpMax;
+        this.hp = hpMax;
+        this.forca = forca;
+        this.hpMaxInicial = hpMaxInicial;
+        this.hpInicial = hpMaxInicial;
+        this.forcaInicial = forcaInicial;
+    }
+
     public Entidade(String nome, int hpMax, int forca) {
         this.nome = nome;
         this.hpMax = hpMax;
         this.hp = hpMax;
         this.forca = forca;
+        this.hpMaxInicial = hpMaxInicial;
+        this.hpInicial = hpMaxInicial;
+        this.forcaInicial = forcaInicial;
     }
 
     /**
@@ -56,7 +101,7 @@ public abstract class Entidade {
 
     /**
      * Metodo para restabelecer a vida
-     * @param hp da entidade
+     * @param novoHp da entidade
      */
     public void setHp(int novoHp) {
         this.hp = novoHp;

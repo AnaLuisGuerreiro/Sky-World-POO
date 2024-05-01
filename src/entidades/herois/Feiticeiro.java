@@ -21,7 +21,7 @@ public class Feiticeiro extends Heroi {
      * @param armaPrincipal
      */
     public Feiticeiro(String nome, int forca, int maxHp, int ouro, ArmaPrincipal armaPrincipal) {
-        super(nome, forca, maxHp, ouro, armaPrincipal);
+        super(nome, forca, maxHp, ouro, forca, maxHp, ouro, armaPrincipal);
     }
 
     /**
@@ -44,8 +44,10 @@ public class Feiticeiro extends Heroi {
             }
 
             // Ataque do npc
+            Efeitos.escrever(Efeitos.RED + "O " + npc.getNome() + " atacou-te." + Efeitos.RESET);
             int danoNpc = npc.getForca();
             this.receberDano(danoNpc); // Vida heroi - ataque
+            this.mostrarDetalhes();
 
             if (this.hp <= 0) { // Verificar vida de heroi apos ataque de npc
                 System.out.println(Efeitos.RED + this.nome + " foste derrotado por " + npc.getNome() + Efeitos.RESET);
@@ -67,9 +69,9 @@ public class Feiticeiro extends Heroi {
      */
     @Override
     public void mostrarDetalhes() {
-        System.out.println("----------------------------------------------------");
+        System.out.println("--------------------------------------------------------------");
         System.out.print(" 🧙🏽‍♂️️ ");
         super.mostrarDetalhes();
-        System.out.println("----------------------------------------------------");
+        System.out.println("--------------------------------------------------------------");
     }
 }

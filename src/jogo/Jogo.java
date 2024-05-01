@@ -9,12 +9,9 @@ import entidades.herois.Arqueiro;
 import entidades.herois.Cavaleiro;
 import entidades.herois.Feiticeiro;
 import itens.ArmaPrincipal;
-import itens.ItemHeroi;
-import itens.consumo.Consumivel;
 import itens.consumo.ConsumivelCombate;
 import itens.consumo.Pocao;
 
-import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -87,6 +84,7 @@ public class Jogo {
         primeiraArma.addHeroi("Arqueiro");
         primeiraArma.addHeroi("Feiticeiro");
 
+        Efeitos.escrever(Efeitos.YELLOW + "Foi-te atribuida uma arma para os desafios iniciais. " + Efeitos.RESET + Efeitos.GREEN + "[" + primeiraArma.getNome() + "]"+ Efeitos.RESET);
         // Instanciar o heroi selecionado com os dados corretos iniciais
         switch (classe) {
             case 1:
@@ -151,29 +149,60 @@ public class Jogo {
         Efeitos.escrever(introText1); // Efeito texto lento
     }
 
-    public void skyWorld(Heroi jogador) throws InterruptedException {
-        tutorial(jogador);
+    public Entidade skyWorld(Heroi jogador) {
+        // tutorial(jogador);
 
+        Entidade vencedor = null;
         Vendedor vendedor = criarVendedor();
         String className = jogador.getClass().getName();
         String nomeHeroi = className.substring(className.lastIndexOf('.') + 1); // Extrair apenas nome da classe do heroi
-        String simNao = "";
+        String simNao;
+
+        vendedor.imprimirLoja(jogador);
 
         int escolha;
         System.out.println("     Escolhe o teu proximo desafio.");
         System.out.println("1.Torre da Lua | 2.Gruta Celestial");
         escolha = input.nextInt();
 
+        // Primeira escolha
         if (escolha == 1) {
-            torreDaLua(jogador);
-            nuvemMistica(jogador);
-            cavernaDaEstrelaCadente(jogador);
-            valeDasEstrelas(jogador);
+            Efeitos.estrada();
+            torreDaLua(jogador); // Primeira sala
+            Efeitos.estrada();
+            nuvemMistica(jogador); // Segunda sala
+            Efeitos.estrada();
+            Efeitos.escrever(Efeitos.YELLOW + "Vagueaste pelas núvens e deparaste-te com duas opções."+ Efeitos.RESET);
+            System.out.println("1.Caverna da Estrela Cadente | 2.Vale das Estrelas");
+            escolha = input.nextInt();
+
+            // Primeira escolha / Primeira escolha
+            if (escolha == 1) {
+                Efeitos.estrada();
+                vencedor = cavernaDaEstrelaCadente(jogador); // Primeira opção /
+                if(vencedor instanceof NPC){
+                    return vencedor;
+                }
+                vendedor.imprimirLoja(jogador);
+                vencedor = cemiterioDosAnjos(jogador);
+
+            // Segunda escolha / Primeira escolha
+            } else if (escolha == 2) {
+                valeDasEstrelas(jogador);
+                Efeitos.estrada();
+                vencedor = grutaCelestial(jogador);
+            }
+
+
+        // Segunda escolha
         } else {
             Efeitos.estrada();
             // Jogar primeira sala escolhida
-            grutaCelestial(jogador);
-
+            vencedor = grutaCelestial(jogador);
+            if(vencedor instanceof Heroi){
+                jogador.usarPocao();
+                System.out.println();
+            }
 
             // Vendedor aparece
             System.out.print(Efeitos.UNDERLINE + "👳🏽‍♂️ Vendedor :" + Efeitos.RESET);
@@ -201,33 +230,53 @@ public class Jogo {
                 nimbusCitadel(jogador);
             }
 
-            labirintoDosVentos(jogador);
-            santuarioDasAurias(jogador);
+            Efeitos.estrada();
+            Efeitos.escrever(Efeitos.YELLOW + "Viste sinais de fumo ao longe, queres descobrir o que se passa?(s/n)" + Efeitos.RESET);
+            simNao = input.next();
+
+            if (simNao.equalsIgnoreCase("s")) {
+                Efeitos.estrada();
+                vencedor = santuarioDasAurias(jogador);
+            } else {
+                Efeitos.estrada();
+                labirintoDosVentos(jogador);
+            }
         }
 
-
+        return vencedor;
     }
 
     private void nuvemMistica(Heroi jogador) {
-        System.out.println("Deparaste-te com uma nuvem densa, à medida que se foi dissipando, encontras-te uma bau cheio de ouro.");
-        System.out.println("[50🥮 adicionado à tua bolsa]");
-
+        Efeitos.escrever(Efeitos.YELLOW + "Deparaste-te com uma nuvem densa, à medida que se foi dissipando, encontras-te uma bau cheio de ouro." + Efeitos.RESET);
+        System.out.println("[50🥮 adicionado à tua bolsa]\n");
         jogador.setOuro(jogador.getOuro() + 50);
+        jogador.mostrarDetalhes();
     }
 
     private void nimbusCitadel(Heroi jogador) {
-        System.out.println("Azar perdeste 30");
+        Efeitos.escrever("Enquanto caminhavas caiste num buraco, deixas-te cair as tuas moedas todas de ouro..." +
+                "ao apanha-las percebeste que perdeste 30🥮.");
         jogador.setOuro(jogador.getOuro() - 30);
+        System.out.println("Carteira: " + jogador.getOuro() + "🥮");
     }
 
-    private void torreDaLua(Entidade jogador) {
-        System.out.println("Perdeste 20vida");
-        jogador.setHp(jogador.getHp() - 20);
+    private void torreDaLua(Heroi jogador) {
+        Efeitos.escrever(Efeitos.YELLOW + "Tropeçaste e ao bater contra um ramo de uma árvore perdeste um pouco de hp." + Efeitos.RESET);
+        System.out.println("[Perdeste -5🩸]\n");
+        jogador.setHp(jogador.getHp() - 5);
+        jogador.mostrarDetalhes();
+        System.out.println();
     }
 
-    private void valeDasEstrelas(Entidade jogador) {
-        System.out.println("Ganhaste 30vida");
-        jogador.setHp(jogador.getHp() + 30);
+    private void valeDasEstrelas(Heroi jogador) {
+
+        Efeitos.escrever(Efeitos.YELLOW + "Surgiu uma fada pelo caminho que te encantou e encheu de alegria." + Efeitos.RESET);
+        System.out.println("[Ganhaste 30🩸 HP Máximo e recuperaste a vida toda]");
+        jogador.setHpMax(jogador.getHpMax() + 30); // Adicionar 30 ao hpMax
+        jogador.setHp(jogador.getHpMax()); // Vida igual ao hpMax
+        jogador.mostrarDetalhes();
+        System.out.println();
+
     }
 
     private void labirintoDosVentos(Heroi jogador) {
@@ -268,32 +317,38 @@ public class Jogo {
             }
         }
 
-
+        jogador.mostrarDetalhes();
+        System.out.println();
     }
 
-    private void grutaCelestial(Heroi jogador) {
+    private Entidade grutaCelestial(Heroi jogador) {
+
+        Entidade vencedor;
         boolean val = rand.nextInt(2) == 0;
         NPC unicornio = new NPC("Unicornio preto", 55, 20, 10);
-        NPC doende = new NPC("Doende", 70, 20, 10);
+        NPC duende = new NPC("Duende", 70, 20, 10);
 
 
         if (val) {
             // 3 inimigos
             Efeitos.escrever(Efeitos.YELLOW + "Ups... tiveste azar... encontraste 3 inimigos!" + Efeitos.RESET);
-            jogador.rondasInimigos(jogador, 3, unicornio);
+            vencedor = jogador.rondasInimigos(jogador, 3, unicornio);
         } else {
             // 2 inimigos
             Efeitos.escrever(Efeitos.YELLOW + "Encontraste apenas 2 inimigos. Derrota-os!" + Efeitos.RESET);
             jogador.rondasInimigos(jogador, 1, unicornio);
-            jogador.rondasInimigos(jogador, 1, doende);
+            vencedor = jogador.rondasInimigos(jogador, 1, duende);
         }
 
+        return vencedor;
     }
 
-    private void santuarioDasAurias(Heroi jogador) {
+    private Entidade santuarioDasAurias(Heroi jogador) {
+        Efeitos.escrever(Efeitos.YELLOW + "Aproximando cada vez mais, o fumo que viste ao longe não eram sinais" +
+                "mas sim vindo de um local de dragões." + Efeitos.RESET);
         double probabilidade = rand.nextDouble(100.0);
         int numeroInimigos;
-        NPC bot = new NPC("Dragão Água", 50, 20, 10);
+        NPC bot = new NPC("Dragão Água", 150, 100, 1000);
 
         if (probabilidade < 50) {
             numeroInimigos = 1;
@@ -304,17 +359,29 @@ public class Jogo {
         }
 
         // Ronda inimigos consoante as probabilidades
-        System.out.println(numeroInimigos + "a enfrentar");
-        jogador.rondasInimigos(jogador, numeroInimigos, bot);
+        Efeitos.escrever(numeroInimigos + " inimigo(s) a enfrentar.");
 
+       return jogador.rondasInimigos(jogador, numeroInimigos, bot);
     }
 
-    private void cavernaDaEstrelaCadente(Heroi jogador) {
+    private Entidade cemiterioDosAnjos(Heroi jogador) {
+        Efeitos.escrever(Efeitos.YELLOW + "Num cenário sombrio aproximas-te por curiosidade." +
+                "Deparas-te com o adversário final." + Efeitos.RESET);
+        NPC bot = new NPC("Boss Final", 200, 30, 1000);
+
+        Efeitos.escrever(Efeitos.UNDERLINE + "👹 Boss final: " + Efeitos.RESET + Efeitos.RED + "Julgaste que a tua jornada já estava no final, mas agora vou-te mostrar o verdadeiro terror.\n Prepara-te para conhecer o teu tumulo!" + Efeitos.RESET);
+
+        return jogador.atacar(bot);
+    }
+
+    private Entidade cavernaDaEstrelaCadente(Heroi jogador) {
+
+        NPC totemGloria = new NPC("Totem", 3000, 3000, 0);
         String letra;
+        Efeitos.escrever(Efeitos.YELLOW + "Encontraste um totem!" + Efeitos.RESET);
+        System.out.println("          === 💰 Totem da Glória 💀 ===");
 
-        System.out.println("          === 💰 Tontem da Glória 💀 ===");
-
-        System.out.println("Tens 50% de probabilidade de ganhar ouro ou... por outro lado, morte.");
+       Efeitos.escrever(Efeitos.YELLOW + "Tens 50% de probabilidade de ganhar ouro ou... por outro lado, morte." + Efeitos.RESET);
 
         do {
             boolean cinquenta50 = rand.nextInt(2) == 0;
@@ -322,54 +389,69 @@ public class Jogo {
             System.out.println("Queres arriscar? (s/n)");
             letra = input.next();
 
-            if (cinquenta50) {
-                Efeitos.escrever("PARABENS! Ganhas-te 150🥮");
-                jogador.setOuro(jogador.getOuro() + 150);
-            } else {
-                Efeitos.escrever(Efeitos.RED + "GAME OVER" + Efeitos.RESET);
-                jogador.setHp(0);
-                return;
-            }
+            if(letra.equalsIgnoreCase("s")) {
 
+                if (cinquenta50) {
+                    Efeitos.escrever("PARABENS! Ganhas-te 150🥮");
+                    jogador.setOuro(jogador.getOuro() + 150);
+                    jogador.mostrarDetalhes();
+                } else {
+                    Efeitos.escrever(Efeitos.RED + "Morreste.\n" + Efeitos.RESET);
+                    jogador.setHp(0);
+                    return totemGloria;
+                }
+            }
         } while (letra.equalsIgnoreCase("s"));
+
+
+        return jogador;
     }
 
     private Vendedor criarVendedor() {
         // Armas Cavaleiro
-        ArmaPrincipal espadaInicial = new ArmaPrincipal("Espada Enferrujada", 50, 25, 40);
+        ArmaPrincipal espadaInicial = new ArmaPrincipal("Espada Enferrujada", 50, 55, 80);
         espadaInicial.addHeroi("Cavaleiro");
-        ArmaPrincipal espadaIntermedia = new ArmaPrincipal("Espada Enterestrelar", 150, 50, 100);
+        ArmaPrincipal espadaIntermedia = new ArmaPrincipal("Espada Interestelar", 100, 75, 110);
         espadaIntermedia.addHeroi("Cavaleiro");
-        ArmaPrincipal espadaAlta = new ArmaPrincipal("Espada Trovão", 300, 90, 140);
+        ArmaPrincipal espadaAlta = new ArmaPrincipal("Espada Trovão", 200, 90, 150);
         espadaAlta.addHeroi("Cavaleiro");
 
         // Armas Feiticeiro
-        ArmaPrincipal bastaoInicial = new ArmaPrincipal("Bastão Enferrujado", 40, 20, 30);
+        ArmaPrincipal bastaoInicial = new ArmaPrincipal("Bastão Enferrujado", 40, 50, 70);
         bastaoInicial.addHeroi("Feiticeiro");
-        ArmaPrincipal bastaoIntermedio = new ArmaPrincipal("Bastão Enterestrelar", 100, 45, 90);
+        ArmaPrincipal bastaoIntermedio = new ArmaPrincipal("Bastão Interestelar", 100, 75, 95);
         bastaoIntermedio.addHeroi("Feiticeiro");
-        ArmaPrincipal bastaoAlto = new ArmaPrincipal("Bastão trovão", 400, 100, 200);
+        ArmaPrincipal bastaoAlto = new ArmaPrincipal("Bastão trovão", 250, 100, 125);
         bastaoAlto.addHeroi("Feiticeiro");
 
         // Armas Arqueiro
-        ArmaPrincipal arcoInicial = new ArmaPrincipal("Arco Enferrujado", 50, 20, 40);
+        ArmaPrincipal arcoInicial = new ArmaPrincipal("Arco Enferrujado", 50, 50, 75);
         arcoInicial.addHeroi("Arqueiro");
-        ArmaPrincipal arcoIntermedio = new ArmaPrincipal("Arco Enterestrelar", 200, 90, 140);
+        ArmaPrincipal arcoIntermedio = new ArmaPrincipal("Arco Interestelar", 100, 75, 90);
         arcoIntermedio.addHeroi("Arqueiro");
-        ArmaPrincipal arcoAlto = new ArmaPrincipal("Arco Trovão", 300, 100, 140);
+        ArmaPrincipal arcoAlto = new ArmaPrincipal("Arco Trovão", 200, 100, 140);
         arcoAlto.addHeroi("Arqueiro");
 
+        // Faca para todos os heróis
+        ArmaPrincipal faca = new ArmaPrincipal("Faca", 20, 25, 40);
+        faca.addHeroi("Cavaleiro");
+        faca.addHeroi("Feiticeiro");
+        faca.addHeroi("Arqueiro");
+
         // Poções
-        Pocao pocaoVida = new Pocao("Poçao vida", 25, 25, 0);
-        Pocao pocaoForca = new Pocao("Poçao força", 15, 0, 25);
+        Pocao pocaoVida = new Pocao("Poção vida", 25, 25, 0);
+        Pocao pocaoForca = new Pocao("Poção força", 15, 0, 25);
 
         // Consumiveis combate
-        ConsumivelCombate ataque = new ConsumivelCombate("ya", 20, 20);
+        ConsumivelCombate consumivelCombateLigeiro = new ConsumivelCombate("Consumivel ataque ligeiro", 20, 20);
+        ConsumivelCombate consumivelCombatePesado = new ConsumivelCombate("Consumivel ataque pesado", 50, 75);
+
 
         // Vendedor
         Vendedor vendedor = new Vendedor();
 
         // Loja - add items
+        vendedor.addItem(faca);
         vendedor.addItem(espadaInicial);
         vendedor.addItem(espadaIntermedia);
         vendedor.addItem(espadaAlta);
@@ -382,7 +464,9 @@ public class Jogo {
         vendedor.addItem(pocaoVida);
         vendedor.addItem(pocaoForca);
         vendedor.addItem(pocaoVida);
-        vendedor.addItem(ataque);
+        vendedor.addItem(consumivelCombateLigeiro);
+        vendedor.addItem(consumivelCombatePesado);
+
 
         return vendedor;
     }

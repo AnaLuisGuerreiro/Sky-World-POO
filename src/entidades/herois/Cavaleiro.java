@@ -21,7 +21,7 @@ public class Cavaleiro extends Heroi {
      * @param armaPrincipal
      */
     public Cavaleiro(String nome, int forca, int maxHp, int ouro, ArmaPrincipal armaPrincipal) {
-        super(nome, forca, maxHp, ouro, armaPrincipal);
+        super(nome, forca, maxHp, ouro, forca, maxHp, ouro, armaPrincipal);
     }
 
     /**
@@ -37,6 +37,7 @@ public class Cavaleiro extends Heroi {
         Efeitos.escrever(Efeitos.YELLOW + "👹 vai atacar! Cuidado!!" + Efeitos.RESET);
 
         // Inimigo ataca primeiro
+        Efeitos.escrever(Efeitos.RED + "O " + npc.getNome() + " atacou-te." + Efeitos.RESET);
         danoNpc = (int) (npc.getForca() * 0.8); // Primeiro ataque apenas 80% da força inicial
         this.receberDano(danoNpc); // Retirar dano à vida do heroi
         this.mostrarDetalhes(); // Mostrar detalhes de heroi
@@ -83,10 +84,10 @@ public class Cavaleiro extends Heroi {
      */
     @Override
     public void mostrarDetalhes() {
-        System.out.println("----------------------------------------------------");
+        System.out.println("-------------------------------------------------------------");
         System.out.print(" 🏇🏽 ");
         super.mostrarDetalhes();
-        System.out.println("----------------------------------------------------");
+        System.out.println("--------------------------------------------------------------");
 
     }
 

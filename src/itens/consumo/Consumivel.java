@@ -1,9 +1,6 @@
 package itens.consumo;
 
-import efeitos.Efeitos;
 import itens.ItemHeroi;
-
-import java.util.ArrayList;
 
 public abstract class Consumivel extends ItemHeroi {
 

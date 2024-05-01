@@ -4,10 +4,8 @@ import efeitos.Efeitos;
 import itens.ArmaPrincipal;
 import itens.ItemHeroi;
 import itens.consumo.Consumivel;
-
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 import java.util.Scanner;
 
 public class Vendedor {
@@ -52,13 +50,23 @@ public class Vendedor {
         do {
             System.out.println("Seleciona o item que queres comprar? (0.Sair)");
             opcao = input.nextInt();
-            if (opcao > 0 && opcao <= numItensMostrar) {
-                vender(jogador, opcao);
-            } else {
-                System.out.print(Efeitos.UNDERLINE + "👳🏽‍♂️ Vendedor : " + Efeitos.RESET);
-                Efeitos.escrever("Esse item não existe guerreiro...");
+            if(opcao > 0){
+                if (opcao <= numItensMostrar) {
+                    vender(jogador, opcao);
+                    System.out.println("          === 🌟🌌 Mercador Celestial 🌌🌟 ===");
+                    for (int i = 0; i < numItensMostrar; i++) {
+                        ItemHeroi item = loja.get(i); // Guardar item por id
+                        System.out.print(i + 1 + " ");
+                        item.mostrarDetalhes();
+                    }
+                } else {
+                    System.out.print(Efeitos.UNDERLINE + "👳🏽‍♂️ Vendedor : " + Efeitos.RESET);
+                    Efeitos.escrever("Esse item não existe guerreiro...");
+                }
             }
         } while (opcao != 0);
+
+        jogador.usarPocao();
 
     }
 
@@ -78,10 +86,12 @@ public class Vendedor {
             return;
         }
 
-        String classeDoHeroi = heroi.getClass().getName(); // Guardar classe do heroi que quer comprar
+        String classeDoHeroi = heroi.getClass().getName().substring(heroi.getClass().getName().lastIndexOf('.') + 1); // Guardar classe do heroi que quer comprar
         // Herois a null é consumivel
         if (itemSelecionado.getHeroisPermitidos() == null) {
             heroi.addConsumivel((Consumivel) itemSelecionado);
+            System.out.println("Parabéns, compraste o consumivel " + Efeitos.BOLD + Efeitos.YELLOW + itemSelecionado.getNome() + Efeitos.RESET);
+
             // Verificar uso permitido por tipo de classe(heroi)
         } else if (!itemSelecionado.getHeroisPermitidos().contains(classeDoHeroi)) {
             System.out.println("Esse item não é para ti.");
@@ -91,18 +101,16 @@ public class Vendedor {
         // Compra com sucesso
         if (itemSelecionado instanceof ArmaPrincipal) {
             heroi.setArmaPrincipal((ArmaPrincipal) itemSelecionado); // Tornar arma a ArmaPrincipal do heroi
-            System.out.println("Parabéns " + Efeitos.BOLD + Efeitos.RED + itemSelecionado.getNome() + Efeitos.RESET);
-        } else {
-            heroi.getInventario().add((Consumivel) itemSelecionado); // Adicionar item ao inventário do heroi
-            System.out.println("Parabéns, compraste o consumivel " + Efeitos.BOLD + Efeitos.YELLOW + itemSelecionado.getNome() + Efeitos.RESET);
+            System.out.println("Parabéns compraste " + Efeitos.BOLD + Efeitos.RED + itemSelecionado.getNome() + Efeitos.RESET);
+
+            // Remover arma principal da loja
+            loja.remove(itemSelecionado);
         }
 
         // Retirar valor do item ao ouro do heroi
         heroi.setOuro(heroi.getOuro() - itemSelecionado.getPreco());
         System.out.println("Tens " + heroi.getOuro() + "🥮"); // Mostrar ouro restante
 
-        // Remover item da loja
-        loja.remove(itemSelecionado);
     }
 
     /**
@@ -112,17 +120,6 @@ public class Vendedor {
      */
     public void addItem(ItemHeroi itemNovo) {
         loja.add(itemNovo);
-    }
-
-    // --------------------------- Getters e setters dos atributos
-
-    /**
-     * Metodo para retornar a loja
-     *
-     * @return a loja (os seus itens)
-     */
-    public ArrayList<ItemHeroi> getLoja() {
-        return loja;
     }
 }
 
