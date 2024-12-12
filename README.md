@@ -49,7 +49,3 @@ Durante o desenvolvimento, foram aplicados conceitos de algoritmia como:
 
 Um dos maiores desafios foi implementar o sistema de combate, especialmente ao equilibrar a dificuldade dos inimigos para proporcionar uma boa experiência de jogo.
 
-## Contribuições Futuras
-- Adicionar uma interface gráfica para melhorar a experiência do jogador.
-- Expandir o mundo do jogo com mais eventos e locais para explorar.
-- Implementar um sistema de salvamento para continuar o jogo em outro momento.
